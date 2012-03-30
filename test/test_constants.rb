@@ -1,5 +1,4 @@
 require 'test_helper'
-require 'indirizzo/constants'
 
 include Indirizzo
 

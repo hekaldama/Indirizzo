@@ -1,5 +1,9 @@
+# TODO I don't think we need set
 require 'set'
+require 'indirizzo/map'
+require 'indirizzo/constants'
 require 'indirizzo/address'
+require 'indirizzo/numbers'
 
 module Indirizzo
 
@@ -15,7 +19,4 @@ module Indirizzo
   end
 
 end
-
-require 'indirizzo/constants'
-require 'indirizzo/numbers'
 
