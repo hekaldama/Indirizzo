@@ -622,27 +622,27 @@ module Indirizzo
     "Wyoming"                        => "WY",
   ]
 
-  # The Cardinals constant maps digits to cardinal number words and back.
-  Cardinals = NumberMap[%w[
+  # The CARDINALS constant maps digits to cardinal number words and back.
+  CARDINALS = NumberMap[%w[
     zero one two three four five six seven eight nine ten
     eleven twelve thirteen fourteen fifteen sixteen seventeen
     eighteen nineteen
   ]]
-  Cardinal_Tens = %w[ twenty thirty forty fifty sixty seventy eighty ninety ]
-  Cardinal_Tens.each {|tens|
-    Cardinals << tens
-    (1..9).each {|n| Cardinals << tens + "-" + Cardinals[n]}
+  CARDINAL_TENS = %w[ twenty thirty forty fifty sixty seventy eighty ninety ]
+  CARDINAL_TENS.each {|tens|
+    CARDINALS << tens
+    (1..9).each {|n| CARDINALS << tens + "-" + CARDINALS[n]}
   }
 
-  # The Ordinals constant maps digits to ordinal number words and back.
-  Ordinals = NumberMap[%w[
+  # The ORDINALS constant maps digits to ordinal number words and back.
+  ORDINALS = NumberMap[%w[
     zeroth first second third fourth fifth sixth seventh eighth ninth
     tenth eleventh twelfth thirteenth fourteenth fifteenth sixteenth
     seventeenth eighteenth nineteenth
   ]]
-  Cardinal_Tens.each {|tens|
-    Ordinals << tens.gsub("y","ieth")
-    (1..9).each {|n| Ordinals << tens + "-" + Ordinals[n]}
+  CARDINAL_TENS.each {|tens|
+    ORDINALS << tens.gsub("y","ieth")
+    (1..9).each {|n| ORDINALS << tens + "-" + ORDINALS[n]}
   }
 
 end
