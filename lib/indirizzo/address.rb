@@ -2,7 +2,7 @@ require 'indirizzo/constants'
 
 module Indirizzo
   # Defines the matching of parsed address tokens.
-  Match = {
+  MATCH = {
     # FIXME: shouldn't have to anchor :number and :zip at start/end
     :number   => /^(\d+\W|[a-z]+)?(\d+)([a-z]?)\b/io,
     :street   => /(?:\b(?:\d+\w*|[a-z'-]+)\s*)+/io,
@@ -56,14 +56,14 @@ module Indirizzo
         @prenum = text[:prenum]
         @sufnum = text[:sufnum]
         if !text[:street].nil?
-          @street = text[:street].scan(Match[:street])
+          @street = text[:street].scan(MATCH[:street])
         end
         @number = ""
         if !@street.nil?
           if text[:number].nil?
             @street.map! { |single_street|
               single_street.downcase!
-              @number = single_street.scan(Match[:number])[0].reject{|n| n.nil? || n.empty?}.first.to_s
+              @number = single_street.scan(MATCH[:number])[0].reject{|n| n.nil? || n.empty?}.first.to_s
               single_street.sub! @number, ""
               single_street.sub! /^\s*,?\s*/o, ""
             }
@@ -137,7 +137,7 @@ module Indirizzo
     def parse
       text = @text.clone.downcase
 
-      @zip = text.scan(Match[:zip]).last
+      @zip = text.scan(MATCH[:zip]).last
       if @zip
         last_match = $&
         zip_index = text.rindex(last_match)
@@ -152,7 +152,7 @@ module Indirizzo
       @country = @text[zip_end_index+1..-1].sub(/^\s*,\s*/, '').strip
       @country = nil if @country == text
 
-      @state = text.scan(Match[:state]).last
+      @state = text.scan(MATCH[:state]).last
       if @state
         last_match = $&
         state_index = text.rindex(last_match)
@@ -162,7 +162,7 @@ module Indirizzo
         @state = ""
       end
 
-      @number = text.scan(Match[:number]).first
+      @number = text.scan(MATCH[:number]).first
       # FIXME: 230 Fish And Game Rd, Hudson NY 12534
       if @number # and not intersection?
         last_match = $&
@@ -180,7 +180,7 @@ module Indirizzo
 
       # FIXME: PO Box should geocode to ZIP
       street_search_end_index = [state_index,zip_index,text.length].reject(&:nil?).min-1
-      @street = text[number_end_index+1..street_search_end_index].scan(Match[:street]).map { |s| s and s.strip }
+      @street = text[number_end_index+1..street_search_end_index].scan(MATCH[:street]).map { |s| s and s.strip }
 
       @street = expand_streets(@street) if @options[:expand_streets]
       # SPECIAL CASE: 1600 Pennsylvania 20050
@@ -189,7 +189,7 @@ module Indirizzo
       street_end_index = @street.map { |s| text.rindex(s) }.reject(&:nil?).min||0
 
       if @city.nil? || @city.empty?
-        @city = text[street_end_index..street_search_end_index+1].scan(Match[:city])
+        @city = text[street_end_index..street_search_end_index+1].scan(MATCH[:city])
         if !@city.empty?
           #@city = [@city[-1].strip]
           @city = [@city.last.strip]
@@ -282,11 +282,11 @@ module Indirizzo
     end
 
     def po_box?
-      !Match[:po_box].match(@text).nil?
+      !MATCH[:po_box].match(@text).nil?
     end
 
     def intersection?
-      !Match[:at].match(@text).nil?
+      !MATCH[:at].match(@text).nil?
     end
   end
 end
