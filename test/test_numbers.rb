@@ -1,5 +1,4 @@
 require 'test_helper'
-require 'indirizzo/numbers'
 
 include Indirizzo
 

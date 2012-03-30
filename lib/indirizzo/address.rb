@@ -1,6 +1,6 @@
-# The Address class takes a US street address or place name and
-# constructs a list of possible structured parses of the address
-# string.
+# The Address class takes a US street address or place name and constructs a
+# list of possible structured parses of the address string based off of
+# Indirizzo::Address::MATCH and Indirizzo.constants.
 module Indirizzo
   class Address
     # Defines the matching of parsed address tokens.

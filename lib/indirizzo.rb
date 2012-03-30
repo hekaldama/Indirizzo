@@ -1,7 +1,7 @@
 require 'indirizzo/map'
+require 'indirizzo/number_map'
 require 'indirizzo/constants'
 require 'indirizzo/address'
-require 'indirizzo/numbers'
 
 module Indirizzo
 
