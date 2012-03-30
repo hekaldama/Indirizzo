@@ -1,7 +1,4 @@
 # coding: utf-8
-require 'set'
-require 'indirizzo/numbers'
-
 module Indirizzo
   class Map < Hash
     # The Map class provides a two-way mapping between postal abbreviations

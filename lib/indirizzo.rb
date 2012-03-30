@@ -1,3 +1,4 @@
+require 'set'
 require 'indirizzo/address'
 
 module Indirizzo
@@ -14,4 +15,7 @@ module Indirizzo
   end
 
 end
+
+require 'indirizzo/constants'
+require 'indirizzo/numbers'
 

@@ -1,5 +1,3 @@
-require 'indirizzo/constants'
-
 module Indirizzo
   # Defines the matching of parsed address tokens.
   MATCH = {
