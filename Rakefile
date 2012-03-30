@@ -29,3 +29,8 @@ end
 task :test do
   Rake::Task['cover_me:report'].invoke
 end
+
+desc "run irb with indirizzo loaded and happy"
+task :irb do
+  sh "irb -Ilib -rindirizzo"
+end
