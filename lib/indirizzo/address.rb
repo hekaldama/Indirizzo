@@ -5,7 +5,7 @@ module Indirizzo
     :number   => /^(\d+\W|[a-z]+)?(\d+)([a-z]?)\b/io,
     :street   => /(?:\b(?:\d+\w*|[a-z'-]+)\s*)+/io,
     :city     => /(?:\b[a-z][a-z'-]+\s*)+/io,
-    :state    => State.regexp,
+    :state    => STATE.regexp,
     :zip      => /\b(\d{5})(?:-(\d{4}))?\b/o,
     :at       => /\s(at|@|and|&)\s/io,
     :po_box => /\b[P|p]*(OST|ost)*\.*\s*[O|o|0]*(ffice|FFICE)*\.*\s*[B|b][O|o|0][X|x]\b/
@@ -83,7 +83,7 @@ module Indirizzo
           @state = text[:region]
           if @state.length > 2
             # full_state = @state.strip # special case: New York
-            @state = State[@state]
+            @state = STATE[@state]
           end
         elsif !text[:state].nil?
           @state = text[:state]
@@ -100,7 +100,7 @@ module Indirizzo
     end
 
     # Expands a token into a list of possible strings based on
-    # the Geocoder::US::Name_Abbr constant, and expands numerals and
+    # the Geocoder::US::NAME_ABBR constant, and expands numerals and
     # number words into their possible equivalents.
     def expand_numbers (string)
       if /\b\d+(?:st|nd|rd|th)?\b/o.match string
@@ -127,7 +127,7 @@ module Indirizzo
     def parse_state(regex_match, text)
       idx = text.rindex(regex_match)
       @full_state = @state[0].strip # special case: New York
-      @state = State[@full_state]
+      @state = STATE[@full_state]
       @city = "Washington" if @state == "DC" && text[idx...idx+regex_match.length] =~ /washington\s+d\.?c\.?/i
       text
     end
@@ -172,7 +172,7 @@ module Indirizzo
         @prenum = @number = @sufnum = ""
       end
 
-      # FIXME: special case: Name_Abbr gets a bit aggressive
+      # FIXME: special case: NAME_ABBR gets a bit aggressive
       # about replacing St with Saint. exceptional case:
       # Sault Ste. Marie
 
@@ -191,7 +191,7 @@ module Indirizzo
         if !@city.empty?
           #@city = [@city[-1].strip]
           @city = [@city.last.strip]
-          add = @city.map {|item| item.gsub(Name_Abbr.regexp) {|m| Name_Abbr[m]}}
+          add = @city.map {|item| item.gsub(NAME_ABBR.regexp) {|m| NAME_ABBR[m]}}
           @city |= add
           @city.map! {|s| s.downcase}
           @city.uniq!
@@ -208,9 +208,9 @@ module Indirizzo
     def expand_streets(street)
       if !street.empty? && !street[0].nil?
         street.map! {|s|s.strip}
-        add = street.map {|item| item.gsub(Name_Abbr.regexp) {|m| Name_Abbr[m]}}
+        add = street.map {|item| item.gsub(NAME_ABBR.regexp) {|m| NAME_ABBR[m]}}
         street |= add
-        add = street.map {|item| item.gsub(Std_Abbr.regexp) {|m| Std_Abbr[m]}}
+        add = street.map {|item| item.gsub(STD_ABBR.regexp) {|m| STD_ABBR[m]}}
         street |= add
         street.map! {|item| expand_numbers(item)}
         street.flatten!
@@ -233,7 +233,7 @@ module Indirizzo
       strings = remove_noise_words(strings)
 
       # Try a simpler case of adding the @number in case everything is an abbr.
-      strings += [@number] if strings.all? {|s| Std_Abbr.key? s or Name_Abbr.key? s}
+      strings += [@number] if strings.all? {|s| STD_ABBR.key? s or NAME_ABBR.key? s}
       strings.uniq
     end
 
@@ -241,10 +241,10 @@ module Indirizzo
       # Don't return strings that consist solely of abbreviations.
       # NOTE: Is this a micro-optimization that has edge cases that will break?
       # Answer: Yes, it breaks on simple things like "Prairie St" or "Front St"
-      prefix = Regexp.new("^" + Prefix_Type.regexp.source + "\s*", Regexp::IGNORECASE)
-      suffix = Regexp.new("\s*" + Suffix_Type.regexp.source + "$", Regexp::IGNORECASE)
-      predxn = Regexp.new("^" + Directional.regexp.source + "\s*", Regexp::IGNORECASE)
-      sufdxn = Regexp.new("\s*" + Directional.regexp.source + "$", Regexp::IGNORECASE)
+      prefix = Regexp.new("^" + PREFIX_TYPE.regexp.source + "\s*", Regexp::IGNORECASE)
+      suffix = Regexp.new("\s*" + SUFFIX_TYPE.regexp.source + "$", Regexp::IGNORECASE)
+      predxn = Regexp.new("^" + DIRECTIONAL.regexp.source + "\s*", Regexp::IGNORECASE)
+      sufdxn = Regexp.new("\s*" + DIRECTIONAL.regexp.source + "$", Regexp::IGNORECASE)
       good_strings = strings.map {|s|
         s = s.clone
         s.gsub!(predxn, "")
@@ -254,7 +254,7 @@ module Indirizzo
         s
       }
       good_strings.reject! {|s| s.empty?}
-      strings = good_strings if !good_strings.empty? {|s| not Std_Abbr.key?(s) and not Name_Abbr.key?(s)}
+      strings = good_strings if !good_strings.empty? {|s| not STD_ABBR.key?(s) and not NAME_ABBR.key?(s)}
       strings
     end
 
@@ -268,7 +268,7 @@ module Indirizzo
       # Don't return strings that consist solely of abbreviations.
       # NOTE: Is this a micro-optimization that has edge cases that will break?
       # Answer: Yes, it breaks on "Prairie"
-      strings.reject { |s| Std_Abbr.key?(s) }.uniq
+      strings.reject { |s| STD_ABBR.key?(s) }.uniq
     end
 
     def city= (strings)

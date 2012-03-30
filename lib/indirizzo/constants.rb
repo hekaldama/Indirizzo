@@ -1,9 +1,9 @@
 # coding: utf-8
 module Indirizzo
-  # The Directional constant maps compass direction words in English and
+  # The DIRECTIONAL constant maps compass direction words in English and
   # Spanish to their 1- or 2- letter abbreviations.  See 2008 TIGER/Line
   # technical documentation Appendix C for more details.
-  Directional = Map[
+  DIRECTIONAL = Map[
     "North"     => "N",
     "South"     => "S",
     "East"      => "E",
@@ -22,9 +22,9 @@ module Indirizzo
     "Sudoeste"  => "SO",
   ]
 
-  # The Prefix_Qualifier constant maps feature prefix qualifiers to their
+  # The PREFIX_QUALIFIER constant maps feature prefix qualifiers to their
   # abbreviations. See 2008 TIGER/Line technical documentation Appendix D.
-  Prefix_Qualifier = Map[
+  PREFIX_QUALIFIER = Map[
     "Alternate" => "Alt",
     "Business"  => "Bus",
     "Bypass"    => "Byp",
@@ -37,9 +37,9 @@ module Indirizzo
     "Spur"      => "Spr",
   ]
 
-  # The Suffix_Qualifier constant maps feature suffix qualifiers to their
+  # The SUFFIX_QUALIFIER constant maps feature suffix qualifiers to their
   # abbreviations. See 2008 TIGER/Line technical documentation Appendix D.
-  Suffix_Qualifier = Map[
+  SUFFIX_QUALIFIER = Map[
     "Access"    => "Acc",
     "Alternate" => "Alt",
     "Business"  => "Bus",
@@ -57,11 +57,11 @@ module Indirizzo
     "Overpass"  => "Ovp",
   ]
 
-  # The Prefix_Canonical constant maps canonical TIGER/Line street type
+  # The PREFIX_CANONICAL constant maps canonical TIGER/Line street type
   # prefixes to their abbreviations. This list is the subset of the list from
   # 2008 TIGER/Line technical documentation Appendix E that was extracted from
   # a TIGER/Line database import.
-  Prefix_Canonical = {
+  PREFIX_CANONICAL = {
     "Arcade"                            => "Arc",
     "Autopista"                         => "Autopista",
     "Avenida"                           => "Ave",
@@ -163,10 +163,10 @@ module Indirizzo
     "Vista"                             => "Vis",
   }
 
-  # The Prefix_Alternate constant maps alternate prefix street types to
+  # The PREFIX_ALTERNATE constant maps alternate prefix street types to
   # their canonical abbreviations. This list was merged in from the USPS
   # list at http://www.usps.com/ncsc/lookups/abbr_suffix.txt.
-  Prefix_Alternate = {
+  PREFIX_ALTERNATE = {
     "Av"      => "Ave",
     "Aven"    => "Ave",
     "Avenu"   => "Ave",
@@ -210,15 +210,15 @@ module Indirizzo
     "Vsta"    => "Vis",
   }
 
-  # The Prefix_Type constant merges the canonical prefix type abbreviations
+  # The PREFIX_TYPE constant merges the canonical prefix type abbreviations
   # with their USPS accepted alternates.
-  Prefix_Type = Map[ Prefix_Canonical.merge(Prefix_Alternate) ]
+  PREFIX_TYPE = Map[ PREFIX_CANONICAL.merge(PREFIX_ALTERNATE) ]
 
-  # The Suffix_Canonical constant maps canonical TIGER/Line street type
+  # The SUFFIX_CANONICAL constant maps canonical TIGER/Line street type
   # suffixes to their abbreviations. This list is the subset of the list from
   # 2008 TIGER/Line technical documentation Appendix E that was extracted from
   # a TIGER/Line database import.
-  Suffix_Canonical = {
+  SUFFIX_CANONICAL = {
     "Alley"                  => "Aly",
     "Arcade"                 => "Arc",
     "Avenida"                => "Ave",
@@ -302,10 +302,10 @@ module Indirizzo
     "Way"                    => "Way",
   }
 
-  # The Suffix_Alternate constant maps alternate suffix street types to
+  # The SUFFIX_ALTERNATE constant maps alternate suffix street types to
   # their canonical abbreviations. This list was merged in from the USPS
   # list at http://www.usps.com/ncsc/lookups/abbr_suffix.txt.
-  Suffix_Alternate = {
+  SUFFIX_ALTERNATE = {
     "Allee"    => "Aly",
     "Ally"     => "Aly",
     "Av"       => "Ave",
@@ -396,13 +396,13 @@ module Indirizzo
     "Wy"       => "Way",
   }
 
-  # The Suffix_Type constant merges the canonical suffix type abbreviations
+  # The SUFFIX_TYPE constant merges the canonical suffix type abbreviations
   # with their USPS accepted alternates.
-  Suffix_Type = Map[ Suffix_Canonical.merge(Suffix_Alternate) ]
+  SUFFIX_TYPE = Map[ SUFFIX_CANONICAL.merge(SUFFIX_ALTERNATE) ]
 
-  # The Unit_Type constant lists acceptable USPS unit type abbreviations
+  # The UNIT_TYPE constant lists acceptable USPS unit type abbreviations
   # from http://www.usps.com/ncsc/lookups/abbr_sud.txt.
-  Unit_Type = Map[
+  UNIT_TYPE = Map[
     "Apartment"  => "Apt",
     "Basement"   => "Bsmt",
     "Building"   => "Bldg",
@@ -428,16 +428,16 @@ module Indirizzo
     "Upper"      => "Uppr",
   ]
 
-  Std_Abbr = Map[
-    [Directional, Prefix_Qualifier, Suffix_Qualifier,
-     Prefix_Type, Suffix_Type].inject({}) {|x,y|x.merge y}
+  STD_ABBR = Map[
+    [DIRECTIONAL, PREFIX_QUALIFIER, SUFFIX_QUALIFIER,
+     PREFIX_TYPE, SUFFIX_TYPE].inject({}) {|x,y|x.merge y}
   ]
 
-  # The Name_Abbr constant maps common toponym abbreviations to their
+  # The NAME_ABBR constant maps common toponym abbreviations to their
   # full word equivalents. This list was constructed partly by hand, and
   # partly by matching USPS alternate abbreviations with feature names
   # found in the TIGER/Line dataset.
-  Name_Abbr = Map[
+  NAME_ABBR = Map[
     "Av"      => "Avenue",
     "Ave"     => "Avenue",
     "Blvd"    => "Boulevard",
@@ -556,9 +556,9 @@ module Indirizzo
     "Xing"    => "Crossing",
   ]
 
-  # The State constant maps US state and territory names to their 2-letter
+  # The STATE constant maps US state and territory names to their 2-letter
   # USPS abbreviations.
-  State = Map[
+  STATE = Map[
     "Alabama"                        => "AL",
     "Alaska"                         => "AK",
     "American Samoa"                 => "AS",

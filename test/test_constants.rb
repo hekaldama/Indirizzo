@@ -42,13 +42,13 @@ class TestConstants < Test::Unit::TestCase
 #    assert @map.partial?( "SOME THREE WORDS" )
 #  end
   def test_constants
-    assert_kind_of Map, Directional
-    assert_kind_of Map, Prefix_Qualifier
-    assert_kind_of Map, Suffix_Qualifier
-    assert_kind_of Map, Prefix_Type
-    assert_kind_of Map, Suffix_Type
-    assert_kind_of Map, Unit_Type
-    assert_kind_of Map, Name_Abbr
-    assert_kind_of Map, State
+    assert_kind_of Map, DIRECTIONAL
+    assert_kind_of Map, PREFIX_QUALIFIER
+    assert_kind_of Map, SUFFIX_QUALIFIER
+    assert_kind_of Map, PREFIX_TYPE
+    assert_kind_of Map, SUFFIX_TYPE
+    assert_kind_of Map, UNIT_TYPE
+    assert_kind_of Map, NAME_ABBR
+    assert_kind_of Map, STATE
   end
 end
